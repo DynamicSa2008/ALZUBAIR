@@ -2,7 +2,7 @@
   "name": "alzubair",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://Eng-khaled279.github.io/Alzubair",
+  "homepage": "https://Eng-khaled279.github.io/Al-Zubair",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
