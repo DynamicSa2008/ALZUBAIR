@@ -2,17 +2,19 @@
   "name": "alzubair",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://Eng-khaled279.github.io/Al-Zubair",
+  "homepage": "https://Eng-khaled279.github.io/ALZUBAIR",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
-  "deploy": "gh-pages -d dist",
+    "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.2.0",
+    "bootstrap": "^5.3.8",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
