@@ -41,6 +41,7 @@ export default function Footer() {
           © جميع الحقوق محفوظة لشركة الزبير
         </span>
       </footer>
+      {/* End footer */}
     </>
   );
 }

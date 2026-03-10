@@ -6,45 +6,39 @@ import slogan4 from "../Images/slogan4.webp";
 import slogan5 from "../Images/slogan5.webp";
 
 export default function Partners() {
+
+  const logos = [slogan1, slogan2, slogan3, slogan4, slogan5];
+
   return (
-    <>
-      <div className="container mt-5 partners-section">
-        <div className="about-section my-5">
-          <h3 className="fs-1 text-center mt-5">شركاء نجاح شركة الزبير</h3>
-          <hr />
-          <p className="fs-4 text-center mt-4">
-            نفخر بثقة عملائنا وشركائنا الاستراتيجيين الذين اختارونا لإدارة ملفات
-            تسجيل العلامة التجارية الخاصة بهم وبناء هوياتهم التجارية.
-          </p>
-        </div>
-        <div className="row d-flex justify-content-center align-items-center">
-          <div className="col-md-12 ">
-            <div
-              id="carouselExampleInterval"
-              className="carousel slide text-center"
-              data-bs-ride="carousel"
-            >
-              <div className="carousel-inner">
-                <div className="carousel-item active" data-bs-interval="1000">
-                  <img src={slogan1} className="" alt="Alzubair slogan" />
-                </div>
-                <div className="carousel-item" data-bs-interval="">
-                  <img src={slogan2} className="" alt="Alzubair slogan" />
-                </div>
-                <div className="carousel-item " data-bs-interval="1000">
-                  <img src={slogan3} className=" " alt="Alzubair slogan" />
-                </div>
-                <div className="carousel-item" data-bs-interval="1000">
-                  <img src={slogan4} className=" " alt="Alzubair slogan" />
-                </div>
-                <div className="carousel-item" data-bs-interval="1000">
-                  <img src={slogan5} className="" alt="Alzubair slogan" />
-                </div>
-              </div>
+    <div className="container mt-5 partners-section">
+      
+      <div className="about-section my-5">
+        <h3 className="fs-1 text-center mt-5">شركاء نجاح شركة الزبير</h3>
+        <hr />
+        <p className="fs-4 text-center mt-4">
+          نفخر بثقة عملائنا وشركائنا الاستراتيجيين الذين اختارونا لإدارة ملفات
+          تسجيل العلامة التجارية الخاصة بهم وبناء هوياتهم التجارية.
+        </p>
+      </div>
+
+      <div className="logo-slider">
+        <div className="logo-track">
+
+          {logos.map((logo, index) => (
+            <div className="logo-item" key={index}>
+              <img src={logo} alt="Partner logo" />
             </div>
-          </div>
+          ))}
+
+          {logos.map((logo, index) => (
+            <div className="logo-item" key={"dup"+index}>
+              <img src={logo} alt="Partner logo" />
+            </div>
+          ))}
+
         </div>
       </div>
-    </>
+
+    </div>
   );
 }

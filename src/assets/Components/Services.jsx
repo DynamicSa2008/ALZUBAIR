@@ -25,24 +25,6 @@ export default function Services() {
           {/* services Cards */}
           <div className="row ">
             <div className="col-md-3 my-2">
-              <div className="card-1 ">
-                <img
-                  className="w-100"
-                  src={service1}
-                  alt="تصميم الهوية وبناء العلامة التجارية"
-                />
-              </div>
-            </div>
-            <div className="col-md-3 my-2">
-              <div className="card-1">
-                <img
-                  className="w-100"
-                  src={service2}
-                  alt="طباعة المخططات الهندسية بدقة وموثوقية"
-                />
-              </div>
-            </div>
-            <div className="col-md-3 my-2">
               <div className="card-1">
                 <img
                   className="w-100"
@@ -60,6 +42,34 @@ export default function Services() {
                 />
               </div>
             </div>
+            <div className="col-md-3 my-2">
+              <div className="card-1">
+                <img
+                  className="w-100"
+                  src={service8}
+                  alt="خدمة الطباعة الاحترافية للعلامة التجارية"
+                />
+              </div>
+            </div>
+            <div className="col-md-3 my-2">
+              <div className="card-1 ">
+                <img
+                  className="w-100"
+                  src={service1}
+                  alt="تصميم الهوية وبناء العلامة التجارية"
+                />
+              </div>
+            </div>
+            <div className="col-md-3 my-2">
+              <div className="card-1">
+                <img
+                  className="w-100"
+                  src={service2}
+                  alt="طباعة المخططات الهندسية بدقة وموثوقية"
+                />
+              </div>
+            </div>
+
             <div className="col-md-3 my-2">
               <div className="card-1">
                 <img
@@ -84,15 +94,6 @@ export default function Services() {
                   className="w-100"
                   src={service7}
                   alt="خدمات الترجمة المعتمدة للوثائق التجارية"
-                />
-              </div>
-            </div>
-            <div className="col-md-3 my-2">
-              <div className="card-1">
-                <img
-                  className="w-100"
-                  src={service8}
-                  alt="خدمة الطباعة الاحترافية للعلامة التجارية"
                 />
               </div>
             </div>

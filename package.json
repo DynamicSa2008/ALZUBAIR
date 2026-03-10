@@ -2,7 +2,7 @@
   "name": "alzubair",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://Eng-khaled279.github.io/ALZUBAIR",
+  "homepage": "https://dynamicsa2008.github.io/ALZUBAIR",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
