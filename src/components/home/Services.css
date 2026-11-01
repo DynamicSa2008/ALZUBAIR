@@ -1,0 +1,126 @@
+.svc-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 22px;
+}
+.svc-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 0.45s var(--ease),
+    box-shadow 0.45s var(--ease),
+    border-color 0.3s,
+    opacity 0.8s var(--ease);
+}
+.svc-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow);
+  border-color: var(--brand-a20);
+}
+.svc-media {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: var(--brand-soft);
+  cursor: zoom-in;
+  /* The source images carry an Arabic caption at the bottom; we crop it off
+     (shown in our own bilingual caption) and keep the photo itself. */
+  aspect-ratio: 5 / 4;
+  overflow: hidden;
+}
+.svc-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.8s var(--ease);
+}
+.svc-card:hover .svc-media img {
+  transform: scale(1.06);
+}
+.svc-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(0 0 0 / 0.28), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.svc-card:hover .svc-media::after {
+  opacity: 1;
+}
+.svc-zoom {
+  position: absolute;
+  bottom: 12px;
+  inset-inline-end: 12px;
+  z-index: 1;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgb(255 255 255 / 0.92);
+  color: var(--ink);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all 0.35s var(--ease);
+}
+.svc-card:hover .svc-zoom,
+.svc-media:focus-visible .svc-zoom {
+  opacity: 1;
+  transform: none;
+}
+.svc-body {
+  position: relative;
+  padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.svc-body .icon-bubble {
+  margin-top: -24px;
+  margin-bottom: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+.svc-body h3 {
+  font-size: 1.05rem;
+  margin-bottom: 6px;
+}
+.svc-body p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  flex: 1;
+}
+.svc-link {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--brand);
+  text-decoration: none;
+}
+.svc-link svg {
+  transition: transform 0.3s var(--ease);
+}
+.svc-link:hover svg {
+  transform: translateX(-4px);
+}
+[dir="ltr"] .svc-link:hover svg {
+  transform: scaleX(-1) translateX(-4px);
+}

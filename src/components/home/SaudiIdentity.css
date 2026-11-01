@@ -1,0 +1,384 @@
+/* ==========================================================================
+   Saudi identity (sa-) — brand journey over Al-Sadu bands & a Najdi skyline.
+   All colours derive from theme vars so occasion themes re-tint the section.
+   ========================================================================== */
+
+.sa {
+  --sa-bg: color-mix(in srgb, var(--brand-strong) 42%, #100c0b);
+  --sa-deep: color-mix(in srgb, var(--brand-strong) 28%, #080605);
+  --sa-gold: var(--accent);
+  --sa-band: 40px;
+  --sa-pad: clamp(56px, 8vw, 110px);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  color: #fff;
+  padding-block: calc(var(--sa-pad) + var(--sa-band)) calc(var(--sa-pad) + var(--sa-band) + clamp(70px, 11vw, 130px));
+  background:
+    radial-gradient(70% 55% at 50% 0%, color-mix(in srgb, var(--brand) 30%, transparent), transparent 70%),
+    radial-gradient(50% 40% at 100% 100%, color-mix(in srgb, var(--sa-gold) 14%, transparent), transparent 70%),
+    var(--sa-bg);
+}
+.sa :focus-visible {
+  outline-color: var(--sa-gold);
+}
+
+/* ---------- Al-Sadu bands ---------- */
+.sa-band {
+  position: absolute;
+  inset-inline: 0;
+  width: 100%;
+  height: var(--sa-band);
+  display: block;
+  z-index: 1;
+}
+.sa-band-top {
+  top: 0;
+}
+.sa-band-bottom {
+  bottom: 0;
+}
+.sa-s0 {
+  fill: var(--sa-deep);
+}
+.sa-s1 {
+  fill: var(--sa-gold);
+}
+.sa-s2 {
+  fill: color-mix(in srgb, #fff 82%, var(--sa-gold));
+}
+.sa-s3 {
+  fill: color-mix(in srgb, var(--brand) 85%, #fff);
+}
+
+.sa-lattice {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  -webkit-mask-image: radial-gradient(70% 60% at 50% 40%, #000, transparent);
+  mask-image: radial-gradient(70% 60% at 50% 40%, #000, transparent);
+}
+.sa-lattice path {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.06);
+  stroke-width: 1;
+}
+
+.sa-inner {
+  z-index: 2;
+}
+
+/* ---------- Heading overrides on the dark canvas ---------- */
+.sa .eyebrow {
+  color: var(--sa-gold);
+  background: color-mix(in srgb, var(--sa-gold) 16%, transparent);
+}
+.sa .section-title {
+  color: #fff;
+}
+.sa .section-title em {
+  color: var(--sa-gold);
+}
+.sa .section-lead {
+  color: rgb(255 255 255 / 0.76);
+}
+
+/* ---------- Journey ---------- */
+.sa-journey {
+  position: relative;
+}
+.sa-path {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  margin-bottom: 8px;
+}
+[dir="rtl"] .sa-path {
+  transform: scaleX(-1);
+}
+.sa-path-ghost {
+  fill: none;
+  stroke: rgb(255 255 255 / 0.2);
+  stroke-width: 2;
+  stroke-dasharray: 2 9;
+  stroke-linecap: round;
+}
+.sa-path-line {
+  fill: none;
+  stroke: var(--sa-gold);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--sa-gold) 60%, transparent));
+  transition: stroke-dashoffset 2.2s cubic-bezier(0.6, 0.1, 0.3, 1) 0.2s;
+}
+.sa[data-on="true"] .sa-path-line {
+  stroke-dashoffset: 0;
+}
+.sa-node {
+  transform: scale(0);
+  transition: transform 0.55s var(--ease);
+  transition-delay: calc(0.3s + var(--i) * 0.4s);
+}
+.sa[data-on="true"] .sa-node {
+  transform: scale(1);
+}
+.sa-node rect {
+  fill: var(--sa-bg);
+  stroke: var(--sa-gold);
+  stroke-width: 2.5;
+}
+.sa-node .sa-node-core {
+  fill: var(--sa-gold);
+  stroke: none;
+}
+
+.sa-stages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+.sa-stage {
+  position: relative;
+  padding: 18px 14px 16px;
+  border-radius: var(--radius);
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.08), rgb(255 255 255 / 0.03));
+  backdrop-filter: blur(6px);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s var(--ease),
+    transform 0.6s var(--ease),
+    border-color 0.3s;
+  transition-delay: calc(0.45s + var(--i) * 0.4s);
+}
+.sa[data-on="true"] .sa-stage {
+  opacity: 1;
+  transform: none;
+}
+.sa-stage:hover {
+  border-color: color-mix(in srgb, var(--sa-gold) 50%, transparent);
+}
+.sa-stage-dot {
+  display: none;
+}
+.sa-stage-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.sa-stage-num {
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: var(--sa-gold);
+}
+.sa-stage-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  color: var(--sa-gold);
+  background: color-mix(in srgb, var(--sa-gold) 16%, transparent);
+}
+.sa-stage-title {
+  font-size: 1rem;
+  margin-bottom: 6px;
+  color: #fff;
+}
+.sa-stage-desc {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: rgb(255 255 255 / 0.72);
+}
+
+/* ---------- Vision + stats ---------- */
+.sa-bottom {
+  margin-top: clamp(40px, 6vw, 72px);
+}
+.sa-vision-title {
+  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+  color: #fff;
+}
+.sa-vision p {
+  color: rgb(255 255 255 / 0.78);
+}
+.sa-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+.sa .sa-ghost {
+  --btn-fg: #fff;
+  border-color: rgb(255 255 255 / 0.3);
+}
+.sa .sa-ghost:hover {
+  color: var(--sa-gold);
+  border-color: var(--sa-gold);
+}
+
+.sa-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+}
+.sa-stat {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: 4px;
+  padding: clamp(16px, 2.4vw, 22px);
+  border-radius: var(--radius);
+  border: 1px solid rgb(255 255 255 / 0.12);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--sa-gold) 10%, transparent), transparent 60%),
+    rgb(255 255 255 / 0.04);
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.6s var(--ease),
+    transform 0.6s var(--ease);
+  transition-delay: calc(0.6s + var(--i) * 0.12s);
+}
+.sa[data-on="true"] .sa-stat {
+  opacity: 1;
+  transform: none;
+}
+.sa-stat dt {
+  font-size: 0.88rem;
+  color: rgb(255 255 255 / 0.72);
+}
+.sa-stat dd {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--sa-gold);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Najdi skyline ---------- */
+.sa-skyline {
+  position: absolute;
+  inset-inline: 0;
+  bottom: var(--sa-band);
+  width: 100%;
+  height: clamp(80px, 13vw, 160px);
+  z-index: 0;
+  pointer-events: none;
+}
+.sa-skyline path {
+  fill: none;
+  stroke: color-mix(in srgb, var(--sa-gold) 50%, transparent);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 3s ease-out;
+  transition-delay: calc(0.4s + var(--i) * 0.15s);
+}
+.sa[data-on="true"] .sa-skyline path {
+  stroke-dashoffset: 0;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1080px) {
+  .sa-stage {
+    padding-inline: 10px;
+  }
+  .sa-stage-title {
+    font-size: 0.92rem;
+  }
+}
+@media (max-width: 860px) {
+  .sa-path {
+    display: none;
+  }
+  .sa-stages {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding-inline-start: 36px;
+    position: relative;
+  }
+  .sa-stages::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 12px;
+    top: 24px;
+    bottom: 24px;
+    width: 2px;
+    border-radius: 2px;
+    background: linear-gradient(var(--sa-gold), color-mix(in srgb, var(--sa-gold) 40%, transparent));
+    box-shadow: 0 0 8px color-mix(in srgb, var(--sa-gold) 50%, transparent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 2s cubic-bezier(0.6, 0.1, 0.3, 1) 0.2s;
+  }
+  .sa[data-on="true"] .sa-stages::before {
+    transform: scaleY(1);
+  }
+  .sa-stage {
+    text-align: start;
+    padding: 16px;
+    transform: translateX(0) translateY(14px);
+  }
+  .sa-stage-top {
+    justify-content: flex-start;
+  }
+  .sa-stage-dot {
+    display: block;
+    position: absolute;
+    inset-inline-start: -31px;
+    top: 26px;
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    border: 2px solid var(--sa-gold);
+    background: var(--sa-bg);
+    transform: rotate(45deg);
+    box-shadow: inset 0 0 0 2px var(--sa-bg), inset 0 0 0 6px var(--sa-gold);
+  }
+}
+@media (max-width: 420px) {
+  .sa-stats {
+    gap: 10px;
+  }
+  .sa-actions .btn {
+    flex: 1 1 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sa-path-line,
+  .sa-skyline path {
+    transition: none;
+    stroke-dashoffset: 0;
+  }
+  .sa-node,
+  .sa-stage,
+  .sa-stat,
+  .sa-stages::before {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  .sa-stage-dot {
+    transform: rotate(45deg);
+  }
+}

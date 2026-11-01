@@ -1,0 +1,418 @@
+/* ===== Order wizard (ord-) ===== */
+.ord-hero {
+  padding-bottom: 24px;
+  text-align: center;
+}
+.ord-hero .section-lead {
+  max-width: 680px;
+  margin-inline: auto;
+}
+
+.ord-wrap {
+  padding-bottom: clamp(56px, 8vw, 110px);
+}
+
+.ord-shell {
+  max-width: 920px;
+  margin-inline: auto;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+/* --- stepper --- */
+.ord-stepper {
+  list-style: none;
+  margin: 0;
+  padding: 20px clamp(16px, 4vw, 36px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  background: linear-gradient(180deg, var(--brand-a10), transparent);
+  border-bottom: 1px solid var(--line);
+}
+.ord-step {
+  position: relative;
+}
+/* connector line between dots */
+.ord-step + .ord-step::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  inset-inline-end: calc(50% + 24px);
+  width: calc(100% - 48px + 8px);
+  height: 2px;
+  border-radius: 2px;
+  background: var(--line);
+  transition: background 0.4s var(--ease);
+}
+.ord-step.is-done + .ord-step::before,
+.ord-step.is-done + .ord-step.is-current::before {
+  background: var(--brand);
+}
+.ord-step-btn {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.ord-step-btn:disabled {
+  cursor: default;
+}
+.ord-step-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  background: var(--surface);
+  border: 2px solid var(--line);
+  color: var(--muted);
+  transition: all 0.3s var(--ease);
+}
+.ord-step.is-current .ord-step-dot {
+  border-color: var(--brand);
+  color: var(--brand);
+  box-shadow: 0 0 0 6px var(--brand-a10);
+}
+.ord-step.is-done .ord-step-dot {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+.ord-step-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.4;
+}
+.ord-step.is-current .ord-step-label,
+.ord-step.is-done .ord-step-label {
+  color: var(--ink);
+}
+
+/* --- body --- */
+.ord-body {
+  padding: clamp(20px, 4vw, 40px);
+}
+.ord-stepof {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--brand);
+  margin-bottom: 4px;
+}
+.ord-step-title {
+  font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+  margin-bottom: 6px;
+}
+.ord-step-title:focus {
+  outline: none;
+}
+.ord-hint {
+  color: var(--muted);
+  font-size: 0.92rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.ord-center {
+  justify-content: center;
+  text-align: center;
+  margin-top: 8px;
+}
+.ord-label {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+.ord-error {
+  color: #c0262d;
+  font-size: 0.85rem;
+  margin: 12px 0 0;
+}
+.ord-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 0 16px;
+}
+
+/* --- service cards --- */
+.ord-services {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: 12px;
+}
+.ord-svc {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  text-align: start;
+  padding: 16px;
+  padding-inline-end: 44px;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  cursor: pointer;
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s var(--ease),
+    transform 0.25s var(--ease),
+    background 0.25s;
+}
+.ord-svc:hover {
+  border-color: var(--brand-a20);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+.ord-svc[aria-pressed="true"] {
+  border-color: var(--brand);
+  background: linear-gradient(180deg, var(--brand-a10), var(--surface));
+  box-shadow: 0 0 0 4px var(--brand-a10);
+}
+.ord-svc[aria-pressed="true"] .icon-bubble {
+  background: var(--brand);
+  color: #fff;
+}
+.ord-svc .icon-bubble {
+  transition: background 0.25s, color 0.25s;
+}
+.ord-svc-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.ord-svc-text strong {
+  font-size: 0.98rem;
+  line-height: 1.4;
+}
+.ord-svc-text span {
+  font-size: 0.83rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.ord-svc-check {
+  position: absolute;
+  top: 14px;
+  inset-inline-end: 14px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  display: grid;
+  place-items: center;
+  color: transparent;
+  transition: all 0.25s var(--ease);
+}
+.ord-svc-check svg {
+  width: 14px;
+  height: 14px;
+}
+.ord-svc[aria-pressed="true"] .ord-svc-check {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+  transform: scale(1.08);
+}
+
+/* --- review --- */
+.ord-review {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+}
+.ord-review-block {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  background: color-mix(in srgb, var(--bg) 60%, var(--surface));
+}
+.ord-review-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.ord-review-head h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+.ord-review-svcs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ord-review-svcs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--brand-a10);
+  color: var(--brand-strong);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.ord-review-svcs svg {
+  width: 16px;
+  height: 16px;
+}
+.ord-dl {
+  margin: 0;
+  display: grid;
+  gap: 6px;
+}
+.ord-dl-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 34%) 1fr;
+  gap: 12px;
+  font-size: 0.92rem;
+}
+.ord-dl dt {
+  color: var(--muted);
+}
+.ord-dl dd {
+  margin: 0;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.ord-pre {
+  white-space: pre-line;
+}
+.ord-alert-error {
+  margin-top: 16px;
+  color: #a1161d;
+}
+
+/* --- nav --- */
+.ord-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.ord-spin {
+  animation: ord-spin 0.9s linear infinite;
+}
+@keyframes ord-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --- success --- */
+.ord-success {
+  max-width: 680px;
+  margin-inline: auto;
+  text-align: center;
+  padding: clamp(28px, 5vw, 52px);
+  box-shadow: var(--shadow);
+  animation: ord-pop 0.6s var(--ease);
+}
+.ord-success-icon {
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--brand-a10);
+  color: var(--brand);
+  box-shadow: 0 0 0 10px color-mix(in srgb, var(--brand) 5%, transparent);
+}
+.ord-success-icon svg {
+  width: 36px;
+  height: 36px;
+}
+.ord-success-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+.ord-success-title:focus {
+  outline: none;
+}
+.ord-code-box {
+  margin: 24px auto 16px;
+  padding: 18px 20px;
+  border-radius: var(--radius);
+  border: 1.5px dashed var(--brand-a20);
+  background: linear-gradient(180deg, var(--brand-a10), transparent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  max-width: 420px;
+}
+.ord-code-label {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+.ord-code {
+  font-size: clamp(1.9rem, 6vw, 2.6rem);
+  letter-spacing: 0.08em;
+  color: var(--brand);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  line-height: 1.2;
+}
+.ord-ok {
+  justify-content: center;
+  align-items: center;
+  max-width: 420px;
+  margin-inline: auto;
+}
+.ord-success-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+@keyframes ord-pop {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+}
+
+@media (max-width: 600px) {
+  .ord-stepper {
+    padding-inline: 8px;
+  }
+  .ord-step-label {
+    font-size: 0.72rem;
+  }
+  .ord-step-dot {
+    width: 32px;
+    height: 32px;
+  }
+  .ord-step + .ord-step::before {
+    top: 16px;
+  }
+  .ord-dl-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .ord-nav .btn {
+    padding-inline: 18px;
+  }
+  .ord-success-actions .btn {
+    width: 100%;
+  }
+}

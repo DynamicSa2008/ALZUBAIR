@@ -1,0 +1,415 @@
+/* ==========================================================================
+   Promo prints & gifts (pg-) — filterable masonry-ish grid + sticky quote basket
+   ========================================================================== */
+
+.pg {
+  background:
+    radial-gradient(60% 40% at 100% 0%, var(--brand-a10), transparent 70%),
+    radial-gradient(50% 40% at 0% 100%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%);
+}
+
+.pg-filters {
+  justify-content: center;
+  margin-bottom: clamp(22px, 4vw, 36px);
+}
+.pg-count {
+  min-width: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--line);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.6;
+}
+.chip[aria-pressed="true"] .pg-count {
+  background: var(--brand);
+  color: #fff;
+}
+
+/* ---------- Grid ---------- */
+.pg-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+  grid-auto-flow: row dense;
+  gap: 18px;
+}
+@media (min-width: 720px) {
+  .pg-wide {
+    grid-column: span 2;
+  }
+}
+
+.pg-card {
+  --tone: var(--brand);
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  animation: pg-in 0.55s var(--ease) backwards;
+  animation-delay: calc(min(var(--i), 12) * 45ms);
+  transition:
+    transform 0.35s var(--ease),
+    box-shadow 0.35s var(--ease),
+    border-color 0.3s;
+}
+.pg-cat-gift {
+  --tone: color-mix(in srgb, var(--accent) 80%, var(--brand-strong));
+}
+.pg-cat-corp {
+  --tone: color-mix(in srgb, var(--brand) 55%, var(--accent));
+}
+.pg-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+  border-color: color-mix(in srgb, var(--tone) 35%, transparent);
+}
+.pg-card[data-on="true"] {
+  border-color: var(--brand);
+  box-shadow:
+    0 0 0 1px var(--brand),
+    var(--shadow-brand);
+}
+
+/* Illustration tile: a "print proof" with crop marks around the imprint area */
+.pg-tile {
+  position: relative;
+  height: 150px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: var(--tone);
+  background:
+    radial-gradient(color-mix(in srgb, var(--tone) 22%, transparent) 1px, transparent 1.5px) 0 0 / 14px 14px,
+    linear-gradient(160deg, color-mix(in srgb, var(--tone) 12%, var(--surface)), color-mix(in srgb, var(--tone) 4%, var(--surface)));
+}
+.pg-wide .pg-tile {
+  height: 170px;
+}
+.pg-tile-ring {
+  position: absolute;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  border: 1.5px dashed color-mix(in srgb, var(--tone) 40%, transparent);
+  transition: transform 1.2s var(--ease);
+}
+.pg-tile-ring::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  margin-left: -4.5px;
+  border-radius: 50%;
+  background: var(--tone);
+}
+.pg-card:hover .pg-tile-ring {
+  transform: rotate(160deg);
+}
+.pg-tile-print {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  display: grid;
+  place-items: center;
+  border-radius: 24px;
+  background: var(--surface);
+  box-shadow:
+    0 14px 26px -14px color-mix(in srgb, var(--tone) 70%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--tone) 20%, transparent);
+  transition: transform 0.45s var(--ease);
+}
+/* crop marks */
+.pg-tile-print::before {
+  content: "";
+  position: absolute;
+  inset: -12px;
+  --c: color-mix(in srgb, var(--tone) 55%, transparent);
+  background:
+    linear-gradient(var(--c), var(--c)) top left / 10px 1.5px,
+    linear-gradient(var(--c), var(--c)) top left / 1.5px 10px,
+    linear-gradient(var(--c), var(--c)) top right / 10px 1.5px,
+    linear-gradient(var(--c), var(--c)) top right / 1.5px 10px,
+    linear-gradient(var(--c), var(--c)) bottom left / 10px 1.5px,
+    linear-gradient(var(--c), var(--c)) bottom left / 1.5px 10px,
+    linear-gradient(var(--c), var(--c)) bottom right / 10px 1.5px,
+    linear-gradient(var(--c), var(--c)) bottom right / 1.5px 10px;
+  background-repeat: no-repeat;
+}
+.pg-tile-print svg {
+  width: 42px;
+  height: 42px;
+  stroke-width: 1.5;
+}
+.pg-card:hover .pg-tile-print {
+  transform: translateY(-4px) rotate(-4deg);
+}
+.pg-card[data-on="true"] .pg-tile-print {
+  background: var(--brand);
+  color: #fff;
+}
+.pg-tech {
+  position: absolute;
+  bottom: 10px;
+  inset-inline-start: 12px;
+  padding: 1px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tone) 25%, transparent);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink);
+  backdrop-filter: blur(4px);
+}
+
+.pg-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 18px 18px;
+}
+.pg-name {
+  font-size: 1.02rem;
+  margin: 0;
+}
+.pg-desc {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+.pg-add {
+  margin-top: auto;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  background: transparent;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.25s,
+    border-color 0.25s,
+    color 0.25s,
+    transform 0.25s var(--ease);
+}
+.pg-add:hover {
+  border-color: var(--brand);
+  color: var(--brand);
+}
+.pg-add:active {
+  transform: scale(0.96);
+}
+.pg-add[aria-pressed="true"] {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+
+/* ---------- Sticky basket ---------- */
+.pg-basket-slot {
+  position: sticky;
+  bottom: 16px;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  pointer-events: none;
+}
+.pg-basket {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: min(640px, 100%);
+  padding: 8px 8px 8px 8px;
+  padding-inline-start: 10px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  box-shadow:
+    0 20px 40px -16px rgb(0 0 0 / 0.45),
+    0 0 0 1px rgb(255 255 255 / 0.06) inset;
+  animation: pg-basket-in 0.5s var(--ease) both;
+}
+.pg-basket-icon {
+  position: relative;
+  flex: none;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.1);
+}
+.pg-basket-badge {
+  position: absolute;
+  top: -4px;
+  inset-inline-end: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: var(--brand);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  animation: pg-bump 0.4s var(--ease);
+}
+.pg-basket-text {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  line-height: 1.4;
+}
+.pg-basket-text strong {
+  font-size: 0.9rem;
+}
+.pg-basket-text small {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: rgb(255 255 255 / 0.65);
+}
+.pg-basket-clear {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 0;
+  background: transparent;
+  color: rgb(255 255 255 / 0.7);
+  cursor: pointer;
+}
+.pg-basket-clear:hover {
+  background: rgb(255 255 255 / 0.1);
+  color: #fff;
+}
+.pg-basket-cta {
+  flex: none;
+}
+.pg-note {
+  margin: 14px 0 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+@media (max-width: 480px) {
+  .pg-basket {
+    border-radius: 22px;
+    flex-wrap: wrap;
+    padding: 10px;
+  }
+  .pg-basket-cta {
+    flex: 1 1 100%;
+  }
+}
+
+/* Phones: two compact columns instead of one tall card per row */
+@media (max-width: 560px) {
+  .pg-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .pg-tile,
+  .pg-wide .pg-tile {
+    height: 104px;
+  }
+  .pg-tile-ring {
+    width: 84px;
+    height: 84px;
+  }
+  .pg-tile-print {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+  }
+  .pg-tile-print svg {
+    width: 26px;
+    height: 26px;
+  }
+  .pg-tech {
+    bottom: 6px;
+    inset-inline-start: 6px;
+    font-size: 0.64rem;
+    padding: 0 7px;
+  }
+  .pg-body {
+    padding: 10px 12px 12px;
+  }
+  .pg-name {
+    font-size: 0.9rem;
+  }
+  .pg-desc {
+    font-size: 0.78rem;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .pg-add {
+    align-self: stretch;
+    justify-content: center;
+    padding: 7px 8px;
+    font-size: 0.78rem;
+    min-height: 36px;
+  }
+}
+
+@keyframes pg-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes pg-basket-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes pg-bump {
+  50% {
+    transform: scale(1.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pg-card,
+  .pg-basket,
+  .pg-basket-badge {
+    animation: none;
+  }
+  .pg-card:hover,
+  .pg-card:hover .pg-tile-print,
+  .pg-card:hover .pg-tile-ring {
+    transform: none;
+  }
+}

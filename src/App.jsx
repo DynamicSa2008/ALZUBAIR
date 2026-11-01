@@ -1,39 +1,37 @@
-import React from "react";
-import Navbar from "./assets/Components/Navbar/Navbar";
-import Hero from "./assets/Components/Hero";
-import Services from "./assets/Components/Services";
-import About from "./assets/Components/About";
-import Partners from "./assets/Components/Partners";
-import WhyAlzubair from "./assets/Components/WhyAlzubair";
-import Features from "./assets/Components/Features";
-import Questions from "./assets/Components/Questions";
-import ContactForm from "./assets/Components/Contact";
-import Footer from "./assets/Components/Footer/Footer";
-import CallButton from "./assets/Components/CallButton";
-import WhatsAppButton from "./assets/Components/WhatsAppButton";
-WhatsAppButton;
-CallButton;
-ContactForm;
-WhyAlzubair;
-Partners;
-About;
-Services;
-Navbar;
-export default function () {
+import { lazy, Suspense } from "react";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/layout/Layout";
+import Home from "./pages/Home";
+
+// Secondary pages load on demand so the home page stays light.
+const OrderPage = lazy(() => import("./pages/OrderPage"));
+const TrackPage = lazy(() => import("./pages/TrackPage"));
+const KycPage = lazy(() => import("./pages/KycPage"));
+const FeedbackPage = lazy(() => import("./pages/FeedbackPage"));
+const DashboardPage = lazy(() => import("./pages/DashboardPage"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+
+export default function App() {
   return (
-    <>
-      <Navbar />
-      <CallButton />
-      <WhatsAppButton />
-      <Hero />
-      <Services />
-      <About />
-      <Partners />
-      <WhyAlzubair />
-      <Features />
-      <Questions />
-      <ContactForm />
-      <Footer />
-    </>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="order" element={<Lazy page={OrderPage} />} />
+        <Route path="track" element={<Lazy page={TrackPage} />} />
+        <Route path="kyc" element={<Lazy page={KycPage} />} />
+        <Route path="feedback" element={<Lazy page={FeedbackPage} />} />
+        <Route path="dashboard" element={<Lazy page={DashboardPage} />} />
+        <Route path="*" element={<Lazy page={NotFound} />} />
+      </Route>
+    </Routes>
+  );
+}
+
+function Lazy({ page }) {
+  const Page = page;
+  return (
+    <Suspense fallback={<div className="page-loader" aria-hidden="true" />}>
+      <Page />
+    </Suspense>
   );
 }

@@ -1,0 +1,11 @@
+{
+  "name": "شركة الزبير — Al Zubair",
+  "short_name": "الزبير",
+  "start_url": "/ALZUBAIR/",
+  "display": "standalone",
+  "background_color": "#fbf8f6",
+  "theme_color": "#c52330",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [{ "src": "meta.webp", "sizes": "300x300", "type": "image/webp" }]
+}

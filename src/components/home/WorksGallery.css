@@ -1,0 +1,280 @@
+/* Featured process video */
+.wg-feature {
+  position: relative;
+  margin-bottom: 36px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--ink);
+  box-shadow: var(--shadow);
+}
+.wg-feature-frame {
+  aspect-ratio: 16 / 9;
+  max-height: 70vh;
+  width: 100%;
+}
+.wg-feature-frame iframe,
+.wg-feature-frame video,
+.wg-feature-poster {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  object-fit: cover;
+  background: #000;
+}
+.wg-feature-poster {
+  position: relative;
+  padding: 0;
+  cursor: pointer;
+}
+.wg-feature-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s var(--ease);
+}
+.wg-feature-poster:hover img {
+  transform: scale(1.04);
+}
+.wg-feature-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: var(--brand);
+  box-shadow: 0 0 0 12px color-mix(in srgb, var(--brand) 30%, transparent);
+  animation: wg-pulse 2.4s var(--ease) infinite;
+}
+.wg-feature-play svg {
+  margin-inline-start: 4px;
+}
+[dir="rtl"] .wg-feature-play svg {
+  margin-inline-start: 0;
+  margin-inline-end: 4px;
+  transform: none;
+}
+@keyframes wg-pulse {
+  50% {
+    box-shadow: 0 0 0 22px transparent;
+  }
+}
+.wg-feature-caption {
+  position: absolute;
+  inset-inline-start: 20px;
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  color: #fff;
+  pointer-events: none;
+  text-shadow: 0 2px 12px rgb(0 0 0 / 0.5);
+}
+.wg-feature:has(iframe) .wg-feature-caption,
+.wg-feature:has(video[controls]) .wg-feature-caption {
+  display: none;
+}
+.wg-feature-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  background: var(--brand);
+  text-shadow: none;
+}
+.wg-feature-caption strong {
+  font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+}
+
+/* Filters */
+.wg-filters {
+  justify-content: center;
+  margin-bottom: 26px;
+}
+.wg-count {
+  font-size: 0.72rem;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--line);
+}
+.chip[aria-pressed="true"] .wg-count {
+  background: var(--brand);
+  color: #fff;
+}
+
+/* Grid */
+.wg-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  grid-auto-rows: 220px;
+  grid-auto-flow: dense;
+  gap: 14px;
+}
+.wg-tall {
+  grid-row: span 2;
+}
+.wg-wide {
+  grid-column: span 2;
+}
+@media (max-width: 560px) {
+  .wg-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 160px;
+    gap: 10px;
+  }
+  .wg-wide {
+    grid-column: span 2;
+  }
+}
+.wg-tile {
+  animation: wg-in 0.6s var(--ease) both;
+  animation-delay: calc(var(--i) * 50ms);
+}
+@keyframes wg-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+}
+.wg-open {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: zoom-in;
+  background: var(--brand-soft);
+  isolation: isolate;
+}
+.wg-open img,
+.wg-open video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 1s var(--ease);
+  z-index: -1;
+}
+.wg-open:hover img,
+.wg-open:hover video {
+  transform: scale(1.07);
+}
+.wg-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(0 0 0 / 0.72), transparent 55%);
+  opacity: 0.85;
+  transition: opacity 0.4s;
+}
+.wg-meta {
+  position: absolute;
+  inset-inline: 14px;
+  bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  color: #fff;
+  text-align: start;
+  transform: translateY(6px);
+  transition: transform 0.4s var(--ease);
+}
+.wg-open:hover .wg-meta {
+  transform: none;
+}
+.wg-cat {
+  font-size: 0.72rem;
+  opacity: 0.8;
+}
+.wg-meta strong {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+.wg-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: rgb(255 255 255 / 0.2);
+  border: 1px solid rgb(255 255 255 / 0.5);
+  backdrop-filter: blur(6px);
+  transition:
+    background 0.3s,
+    transform 0.3s var(--ease);
+}
+.wg-open:hover .wg-play {
+  background: var(--brand);
+  transform: scale(1.08);
+}
+.wg-flag {
+  position: absolute;
+  top: 12px;
+  inset-inline-start: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  color: var(--ink);
+  background: rgb(255 255 255 / 0.9);
+}
+.wg-zoom {
+  position: absolute;
+  top: 12px;
+  inset-inline-end: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  background: rgb(255 255 255 / 0.9);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s var(--ease);
+}
+.wg-open:hover .wg-zoom,
+.wg-open:focus-visible .wg-zoom {
+  opacity: 1;
+  transform: none;
+}
+
+.wg-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wg-tile {
+    animation: none;
+  }
+}
