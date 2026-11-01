@@ -1,0 +1,639 @@
+/* ---------- KYC page ---------- */
+.kyc-hero {
+  padding-bottom: 24px;
+  background:
+    radial-gradient(60% 80% at 100% 0%, var(--brand-a10), transparent 70%),
+    radial-gradient(40% 60% at 0% 100%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%);
+}
+.kyc-lead {
+  max-width: 720px;
+}
+
+.kyc-section {
+  padding-block: 8px clamp(56px, 8vw, 100px);
+}
+
+.kyc-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: clamp(20px, 3vw, 32px);
+  align-items: start;
+}
+@media (max-width: 960px) {
+  .kyc-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kyc-card {
+  padding: clamp(20px, 4vw, 36px);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  scroll-margin-top: calc(var(--header-h) + 16px);
+}
+
+.kyc-muted {
+  color: var(--muted);
+}
+.kyc-optional {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 0.85em;
+}
+.kyc-error {
+  color: #c0262d;
+  font-size: 0.82rem;
+  margin: 0;
+  min-height: 0;
+}
+.kyc-error:empty {
+  display: none;
+}
+.kyc-error-summary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+/* ----- Step indicator ----- */
+.kyc-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+}
+.kyc-step-btn {
+  all: unset;
+  box-sizing: border-box;
+  inline-size: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  cursor: default;
+  border-radius: 12px;
+  padding: 4px 2px;
+}
+.kyc-step.is-done .kyc-step-btn {
+  cursor: pointer;
+}
+.kyc-step-btn:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+.kyc-step-dot {
+  inline-size: 40px;
+  block-size: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  color: var(--muted);
+  transition:
+    background 0.3s var(--ease),
+    color 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    transform 0.3s var(--ease);
+}
+.kyc-step-label {
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: var(--muted);
+  font-weight: 500;
+}
+.kyc-step.is-current .kyc-step-dot {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+  transform: scale(1.06);
+  box-shadow: 0 0 0 6px var(--brand-a10);
+}
+.kyc-step.is-current .kyc-step-label {
+  color: var(--ink);
+  font-weight: 700;
+}
+.kyc-step.is-done .kyc-step-dot {
+  background: var(--brand-a10);
+  border-color: var(--brand-a20);
+  color: var(--brand);
+}
+.kyc-step.is-done .kyc-step-btn:hover .kyc-step-dot {
+  border-color: var(--brand);
+}
+@media (max-width: 560px) {
+  .kyc-step-label {
+    display: none;
+  }
+  .kyc-step-dot {
+    inline-size: 34px;
+    block-size: 34px;
+  }
+}
+
+.kyc-progress {
+  margin-block: 18px 26px;
+  block-size: 4px;
+  border-radius: 999px;
+  background: var(--line);
+  overflow: hidden;
+}
+.kyc-progress span {
+  display: block;
+  block-size: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--brand), var(--accent));
+  transition: inline-size 0.5s var(--ease);
+}
+[dir="rtl"] .kyc-progress span {
+  background: linear-gradient(270deg, var(--brand), var(--accent));
+}
+
+.kyc-step-head {
+  margin-bottom: 18px;
+}
+.kyc-step-count {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--brand);
+  margin-bottom: 2px;
+}
+.kyc-step-head h2 {
+  font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+  margin: 0;
+}
+.kyc-step-head h2:focus,
+.kyc-success h2:focus {
+  outline: none;
+}
+
+.kyc-body {
+  animation: kyc-in 0.45s var(--ease) both;
+}
+@keyframes kyc-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* LTR numbers/codes still hug the reading edge in Arabic (direction is ltr, so "end" = right). */
+[dir="rtl"] .kyc-card .input.ltr {
+  text-align: end;
+}
+
+.kyc-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 16px;
+}
+.kyc-span {
+  grid-column: 1 / -1;
+}
+@media (max-width: 640px) {
+  .kyc-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ----- Step 1: customer type ----- */
+.kyc-types {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 8px;
+}
+@media (max-width: 720px) {
+  .kyc-types {
+    grid-template-columns: 1fr;
+  }
+}
+.kyc-type {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 20px;
+  text-align: start;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  cursor: pointer;
+  transition:
+    border-color 0.25s,
+    box-shadow 0.3s var(--ease),
+    transform 0.3s var(--ease),
+    background 0.25s;
+}
+.kyc-type:hover {
+  border-color: var(--brand-a20);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+.kyc-type.is-on {
+  border-color: var(--brand);
+  background: color-mix(in srgb, var(--brand) 4%, var(--surface));
+  box-shadow: 0 0 0 4px var(--brand-a10);
+}
+.kyc-type-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.kyc-type-text strong {
+  font-size: 1.05rem;
+}
+.kyc-type-text small {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.kyc-type-check {
+  position: absolute;
+  inset-block-start: 14px;
+  inset-inline-end: 14px;
+  inline-size: 24px;
+  block-size: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--line);
+  color: transparent;
+  transition: all 0.25s var(--ease);
+}
+.kyc-type.is-on .kyc-type-check {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+@media (max-width: 720px) {
+  .kyc-type {
+    flex-direction: row;
+    align-items: center;
+    padding: 16px;
+    padding-inline-end: 48px;
+  }
+  .kyc-type-check {
+    inset-block-start: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/* ----- Step 4: documents ----- */
+.kyc-docs {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.kyc-doc {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  border: 1.5px dashed var(--line);
+  background: var(--surface);
+  transition:
+    border-color 0.25s,
+    background 0.25s;
+}
+.kyc-doc.has-file {
+  border-style: solid;
+  border-color: var(--brand-a20);
+  background: color-mix(in srgb, var(--brand) 3%, var(--surface));
+}
+.kyc-doc .icon-bubble {
+  inline-size: 42px;
+  block-size: 42px;
+  border-radius: 12px;
+}
+.kyc-doc-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.kyc-doc-info strong {
+  font-size: 0.95rem;
+}
+.kyc-doc-meta {
+  display: flex;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  min-width: 0;
+}
+.kyc-doc-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.kyc-doc-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.kyc-file-input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  opacity: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+.kyc-file-input:focus-visible + .kyc-file-btn {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+}
+.kyc-remove {
+  inline-size: 34px;
+  block-size: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all 0.2s;
+}
+.kyc-remove:hover {
+  color: var(--brand);
+  border-color: var(--brand);
+}
+@media (max-width: 520px) {
+  .kyc-doc {
+    flex-wrap: wrap;
+  }
+  .kyc-doc-info {
+    flex-basis: calc(100% - 60px);
+  }
+  .kyc-doc-actions {
+    inline-size: 100%;
+    justify-content: flex-end;
+  }
+}
+.kyc-note {
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+.kyc-note svg {
+  flex-shrink: 0;
+  color: var(--brand);
+  margin-top: 3px;
+}
+
+/* ----- Step 5: review ----- */
+.kyc-review {
+  margin: 0 0 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.kyc-review-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 40%) 1fr;
+  gap: 12px;
+  padding: 12px 16px;
+}
+.kyc-review-row:nth-child(odd) {
+  background: color-mix(in srgb, var(--ink) 2.5%, transparent);
+}
+.kyc-review-row dt {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+.kyc-review-row dd {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 480px) {
+  .kyc-review-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+.kyc-review-edit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.kyc-consent {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 16px;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--line);
+  background: color-mix(in srgb, var(--brand) 3%, var(--surface));
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.kyc-consent.is-invalid {
+  border-color: #c0262d;
+}
+.kyc-consent input {
+  position: absolute;
+  opacity: 0;
+  inline-size: 22px;
+  block-size: 22px;
+  margin: 0;
+  cursor: pointer;
+}
+.kyc-consent-box {
+  flex-shrink: 0;
+  inline-size: 22px;
+  block-size: 22px;
+  border-radius: 7px;
+  border: 1.5px solid color-mix(in srgb, var(--ink) 30%, transparent);
+  background: var(--surface);
+  display: grid;
+  place-items: center;
+  color: transparent;
+  margin-top: 2px;
+  transition: all 0.2s var(--ease);
+}
+.kyc-consent input:checked + .kyc-consent-box {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+.kyc-consent input:focus-visible + .kyc-consent-box {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+}
+.kyc-consent-text {
+  font-size: 0.88rem;
+  line-height: 1.8;
+  color: color-mix(in srgb, var(--ink) 85%, transparent);
+}
+
+/* ----- Navigation ----- */
+.kyc-live:empty {
+  display: none;
+}
+.kyc-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 420px) {
+  .kyc-nav .btn {
+    padding-inline: 18px;
+  }
+}
+.kyc-spin {
+  animation: kyc-spin 0.9s linear infinite;
+}
+@keyframes kyc-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ----- Success ----- */
+.kyc-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding-block: 16px;
+  animation: kyc-in 0.5s var(--ease) both;
+}
+.kyc-success h2 {
+  font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+  margin: 0;
+}
+.kyc-success p {
+  max-width: 520px;
+  margin: 0;
+}
+.kyc-success-icon {
+  inline-size: 72px;
+  block-size: 72px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--brand-a10);
+  color: var(--brand);
+  box-shadow: 0 0 0 10px color-mix(in srgb, var(--brand) 5%, transparent);
+  margin-bottom: 6px;
+}
+.kyc-success-icon svg {
+  inline-size: 34px;
+  block-size: 34px;
+}
+.kyc-ref {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px 14px;
+  padding: 14px 18px;
+  margin-block: 6px;
+  border-radius: var(--radius);
+  border: 1.5px dashed var(--brand-a20);
+  background: color-mix(in srgb, var(--brand) 4%, var(--surface));
+}
+.kyc-ref-label {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+.kyc-ref strong {
+  font-size: 1.35rem;
+  letter-spacing: 0.08em;
+  color: var(--brand);
+}
+.kyc-wa {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-block: 8px;
+}
+
+/* ----- Side panel ----- */
+.kyc-aside {
+  position: sticky;
+  top: calc(var(--header-h) + 20px);
+}
+@media (max-width: 960px) {
+  .kyc-aside {
+    position: static;
+  }
+}
+.kyc-why {
+  border-radius: var(--radius-lg);
+  padding: 26px;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--brand) 5%, var(--surface)), var(--surface) 60%);
+}
+.kyc-why h2 {
+  font-size: 1.15rem;
+  margin: 14px 0 8px;
+}
+.kyc-why > p {
+  font-size: 0.92rem;
+}
+.kyc-why-list {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.kyc-why-list li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+.kyc-why-dot {
+  flex-shrink: 0;
+  inline-size: 22px;
+  block-size: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--brand-a10);
+  color: var(--brand);
+  margin-top: 3px;
+}
+.kyc-secure {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.kyc-secure svg {
+  flex-shrink: 0;
+  color: var(--brand);
+}

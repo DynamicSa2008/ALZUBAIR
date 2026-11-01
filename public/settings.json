@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "contact": {
+    "phone": "+966549291853",
+    "whatsapp": "966549291853",
+    "email": "Info@trademarks-sa.com",
+    "address": {
+      "ar": "الرياض - حي الملز، شارع الستين - بجوار دوار الكويت",
+      "en": "Riyadh – Al Malaz, Al Sitteen St., next to Kuwait Roundabout"
+    },
+    "mapUrl": "https://maps.google.com/?q=Riyadh+Al+Malaz+Al+Sitteen+Street",
+    "hours": {
+      "ar": "الأحد – الخميس، ٩ ص – ٦ م",
+      "en": "Sun – Thu, 9 AM – 6 PM"
+    }
+  },
+  "routing": {
+    "orders": {
+      "whatsapp": "",
+      "email": ""
+    },
+    "kyc": {
+      "whatsapp": "",
+      "email": ""
+    },
+    "feedback": {
+      "whatsapp": "",
+      "email": ""
+    },
+    "contact": {
+      "whatsapp": "",
+      "email": ""
+    }
+  },
+  "social": {
+    "x": "",
+    "instagram": "",
+    "linkedin": "",
+    "snapchat": "",
+    "tiktok": ""
+  },
+  "floating": {
+    "call": true,
+    "whatsapp": true
+  },
+  "stats": [
+    {
+      "value": 500,
+      "prefix": "+",
+      "suffix": "",
+      "label": {
+        "ar": "علامة مسجّلة",
+        "en": "Trademarks registered"
+      }
+    },
+    {
+      "value": 1200,
+      "prefix": "+",
+      "suffix": "",
+      "label": {
+        "ar": "مشروع طباعة وتجليد",
+        "en": "Print & binding projects"
+      }
+    },
+    {
+      "value": 300,
+      "prefix": "+",
+      "suffix": "",
+      "label": {
+        "ar": "ترجمة معتمدة",
+        "en": "Certified translations"
+      }
+    },
+    {
+      "value": 98,
+      "prefix": "",
+      "suffix": "%",
+      "label": {
+        "ar": "رضا العملاء",
+        "en": "Client satisfaction"
+      }
+    }
+  ],
+  "gallery": {
+    "video": {
+      "kind": "",
+      "src": "",
+      "poster": "",
+      "title": {
+        "ar": "",
+        "en": ""
+      }
+    },
+    "items": []
+  },
+  "activeTheme": "classic"
+}

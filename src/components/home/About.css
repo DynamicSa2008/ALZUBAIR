@@ -1,0 +1,121 @@
+.about-rely {
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0 18px;
+}
+.about-rely::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to var(--line-dir, left), var(--brand-a20), transparent);
+}
+[dir="ltr"] .about-rely::after {
+  --line-dir: right;
+}
+.about-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.about-list li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  transition:
+    border-color 0.3s,
+    transform 0.4s var(--ease),
+    box-shadow 0.4s var(--ease),
+    opacity 0.8s var(--ease);
+}
+.about-list li:hover {
+  border-color: var(--brand-a20);
+  box-shadow: var(--shadow-sm);
+  transform: translateX(var(--nudge, 4px));
+}
+[dir="rtl"] .about-list li:hover {
+  --nudge: -4px;
+}
+.about-list .icon-bubble {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+}
+
+.about-media {
+  position: relative;
+  margin: 0;
+  padding: 18px;
+}
+.about-img {
+  position: relative;
+  z-index: 1;
+  border-radius: 30px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  box-shadow: var(--shadow);
+}
+.about-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 40% center;
+  transition: transform 1.2s var(--ease);
+}
+.about-media:hover .about-img img {
+  transform: scale(1.04);
+}
+.about-pattern {
+  position: absolute;
+  inset: 0 30% 30% 0;
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, var(--brand-a20) 25%, transparent 25%) 0 0 / 22px 22px,
+    linear-gradient(225deg, var(--brand-a20) 25%, transparent 25%) 0 0 / 22px 22px;
+}
+[dir="ltr"] .about-pattern {
+  inset: 0 0 30% 30%;
+}
+.about-badge {
+  position: absolute;
+  z-index: 2;
+  bottom: 40px;
+  inset-inline-end: -6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px 10px 10px;
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  font-weight: 600;
+  font-size: 0.92rem;
+  animation: hero-bob 5s ease-in-out infinite;
+}
+[dir="rtl"] .about-badge {
+  padding: 10px 10px 10px 18px;
+}
+.about-badge-z {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 700;
+  font-style: italic;
+}
+@media (max-width: 900px) {
+  .about-media {
+    max-width: 460px;
+    margin-inline: auto;
+  }
+}
