@@ -3,6 +3,7 @@ import { BadgeCheck, ClipboardList, Database, LayoutDashboard, LoaderCircle, Log
 import Seo from "../components/Seo";
 import { useI18n } from "../i18n/I18nProvider";
 import { list, subscribe } from "../lib/store";
+import { hasApi, getAdminToken, logout } from "../lib/api";
 import { PIN_KEY, seedDemoData } from "../components/dashboard/helpers";
 import PinGate from "../components/dashboard/PinGate";
 import Overview from "../components/dashboard/Overview";
@@ -74,7 +75,7 @@ const SECTIONS = [
 
 function readUnlocked() {
   try {
-    return sessionStorage.getItem(PIN_KEY) === "1";
+    return sessionStorage.getItem(PIN_KEY) === "1" && (!hasApi || Boolean(getAdminToken()));
   } catch {
     return false;
   }
@@ -119,6 +120,7 @@ export default function DashboardPage() {
   };
 
   const lock = () => {
+    if (hasApi) logout();
     try {
       sessionStorage.removeItem(PIN_KEY);
     } catch {
@@ -126,6 +128,20 @@ export default function DashboardPage() {
     }
     setUnlocked(false);
   };
+
+  // Server session expired (12h) → back to the login screen.
+  useEffect(() => {
+    const onExpired = () => {
+      try {
+        sessionStorage.removeItem(PIN_KEY);
+      } catch {
+        /* storage unavailable */
+      }
+      setUnlocked(false);
+    };
+    window.addEventListener("alzubair:logout", onExpired);
+    return () => window.removeEventListener("alzubair:logout", onExpired);
+  }, []);
 
   const go = (key) => {
     setSection(key);

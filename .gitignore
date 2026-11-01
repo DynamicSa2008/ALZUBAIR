@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Server-only secrets (PHP API)
+public/api/config.php
+public/api/storage/
+public/uploads/
+.env
+alzubair-site.zip

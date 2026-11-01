@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { DEFAULT_SETTINGS } from "./defaults";
 import { mergeSettings, setCurrent } from "./core";
+import { call, hasApi } from "../lib/api";
 
 // Load order: defaults → published public/settings.json → (admin only) local draft preview.
 
@@ -16,6 +17,14 @@ function readDraft() {
 }
 
 async function fetchPublished() {
+  // Server: settings saved from the dashboard live behind the API. Falls back to the bundled settings.json.
+  if (hasApi) {
+    try {
+      return mergeSettings(DEFAULT_SETTINGS, await call("settings"));
+    } catch {
+      /* not saved yet */
+    }
+  }
   try {
     // GitHub Pages caches for ~10 min; the query string makes freshly published edits show up.
     const res = await fetch(`${import.meta.env.BASE_URL}settings.json?v=${Date.now()}`, { cache: "no-store" });

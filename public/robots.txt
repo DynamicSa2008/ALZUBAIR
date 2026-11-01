@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /ALZUBAIR/dashboard/
-
-Sitemap: https://dynamicsa2008.github.io/ALZUBAIR/sitemap.xml

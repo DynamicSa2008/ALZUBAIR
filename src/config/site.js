@@ -2,7 +2,8 @@
 // they live in public/settings.json and are edited from the dashboard (src/settings/).
 
 export const SITE = {
-  url: "https://dynamicsa2008.github.io/ALZUBAIR",
+  // Public address of the site, no trailing slash (canonical links, share previews, sitemap).
+  url: (import.meta.env.VITE_SITE_URL || "https://trademarks-sa.com").replace(/\/$/, ""),
 };
 
 export const INTEGRATIONS = {
@@ -15,6 +16,7 @@ export const INTEGRATIONS = {
     templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "",
     publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "",
   },
-  // Dashboard PIN. This is a convenience lock for a static site, not real security.
+  // Local development only: the dashboard password when there is no PHP API.
+  // On the server the password lives in api/config.php.
   dashboardPin: import.meta.env.VITE_DASHBOARD_PIN || "2030",
 };

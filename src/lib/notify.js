@@ -1,5 +1,6 @@
 import { INTEGRATIONS } from "../config/site";
 import { getSettings, routeFor } from "../settings/core";
+import { call, hasApi } from "./api";
 
 // wa.me link with a prefilled message — works with no API at all.
 // `section` (orders | kyc | feedback | contact) picks the number configured for it in the dashboard.
@@ -44,8 +45,15 @@ async function sendEmail({ subject, message, replyTo, toEmail }) {
 
 export const integrationsReady = {
   whatsappApi: () => Boolean(INTEGRATIONS.whatsappApiUrl),
-  email: () => Object.values(INTEGRATIONS.emailjs).every(Boolean),
+  email: () => hasApi || Object.values(INTEGRATIONS.emailjs).every(Boolean),
 };
+
+// On the server the PHP API sends the email itself (to the section's address from the dashboard settings).
+async function sendServerEmail({ subject, message, replyTo, section }) {
+  if (!hasApi) return false;
+  const res = await call("notify", { body: { subject, message, replyTo, section } });
+  return Boolean(res.email);
+}
 
 /**
  * Notify the company about a new submission.
@@ -62,7 +70,9 @@ export async function notifyCompany({ subject, fields, replyTo, section }) {
     /* network / config issue — fall back */
   }
   try {
-    sent.email = await sendEmail({ subject, message, replyTo, toEmail: route.email });
+    sent.email = hasApi
+      ? await sendServerEmail({ subject, message, replyTo, section })
+      : await sendEmail({ subject, message, replyTo, toEmail: route.email });
   } catch {
     /* network / config issue — fall back */
   }

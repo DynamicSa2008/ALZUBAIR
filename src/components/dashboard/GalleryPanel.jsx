@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { useI18n } from "../../i18n/I18nProvider";
 import { useSettings } from "../../settings/SettingsProvider";
-import { getToken, uploadMedia, prepareImage, MAX_UPLOAD_MB } from "../../settings/publish";
+import { uploadMedia, prepareImage, canPublish, MAX_UPLOAD_MB } from "../../settings/publish";
 import { GALLERY_CATEGORIES, mediaUrl, youtubeId, youtubeThumb } from "../../data/gallery";
 import PublishBar from "./PublishBar";
 import "./GalleryPanel.css";
@@ -27,7 +27,7 @@ const TEXT = {
     title: "معرض الأعمال والفيديو",
     lead: "ارفع صور أعمالك وفيديوهات الطباعة، رتّبها وصنّفها، ثم انشرها للزوار.",
     sample: "لا توجد أعمال مضافة بعد — الموقع يعرض الصور الافتراضية حتى تضيف أعمالك.",
-    needToken: "لرفع الملفات أدخل مفتاح GitHub في أسفل الصفحة أولاً.",
+    needToken: "رفع الملفات يعمل على السيرفر فقط (أنت الآن في وضع التطوير).",
     videoTitle: "فيديو عملية الطباعة (أعلى المعرض)",
     kinds: { "": "بدون فيديو", youtube: "رابط يوتيوب", file: "رفع ملف فيديو" },
     ytUrl: "رابط الفيديو على يوتيوب",
@@ -62,7 +62,7 @@ const TEXT = {
     title: "Works gallery & video",
     lead: "Upload photos of your work and print videos, sort and categorise them, then publish.",
     sample: "No work added yet — the site shows the sample images until you add yours.",
-    needToken: "To upload files, enter the GitHub token at the bottom of the page first.",
+    needToken: "File uploads work on the server only (you are in development mode).",
     videoTitle: "Print process video (top of the gallery)",
     kinds: { "": "No video", youtube: "YouTube link", file: "Upload a video file" },
     ytUrl: "YouTube video link",
@@ -107,8 +107,7 @@ export default function GalleryPanel() {
   const [ytError, setYtError] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const fileRef = useRef(null);
-  const [, refreshToken] = useState(0);
-  const token = getToken();
+  const token = canPublish;
   const dirty = JSON.stringify(gal) !== JSON.stringify(published.gallery);
 
   const patchVideo = (patch) => setGal((g) => ({ ...g, video: { ...g.video, ...patch } }));
@@ -126,7 +125,7 @@ export default function GalleryPanel() {
     setBusy((b) => [...b, job]);
     try {
       const blob = await prepareImage(file);
-      const path = await uploadMedia(getToken(), blob, file.name);
+      const path = await uploadMedia(blob, file.name);
       setBusy((b) => b.filter((j) => j.id !== job.id));
       return path;
     } catch (e) {
@@ -136,7 +135,7 @@ export default function GalleryPanel() {
   }
 
   async function addFiles(files) {
-    if (!getToken()) return;
+    if (!canPublish) return;
     for (const file of files) {
       const kind = file.type.startsWith("video/") ? "video" : file.type.startsWith("image/") ? "image" : null;
       if (!kind) continue;
@@ -419,7 +418,7 @@ export default function GalleryPanel() {
             {tx.discard}
           </button>
         </div>
-        <PublishBar value={{ ...settings, gallery: gal }} disabled={!dirty || busy.some((j) => !j.error)} onTokenChange={() => refreshToken((n) => n + 1)} />
+        <PublishBar value={{ ...settings, gallery: gal }} disabled={!dirty || busy.some((j) => !j.error)} />
       </section>
     </div>
   );
